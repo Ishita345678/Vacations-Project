@@ -1,0 +1,51 @@
+
+<% layout("/layouts/boilerplate") %>
+<div class="container-fluid">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="page-title">Explore Amazing Places</h1>
+                <a href="/listings/new" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Listing
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Listings Grid -->
+    <div class="row">
+        <% for(let listing of allListings) { %>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="listing-card">
+                <div class="listing-image-container">
+                    <img src="<%= listing.image %>" alt="<%= listing.title %>" class="listing-image">
+                </div>
+                <div class="listing-content">
+                    <h5 class="listing-title"><%= listing.title %></h5>
+                    <p class="listing-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <%= listing.location %>, <%= listing.country %>
+                    </p>
+                    <p class="listing-price">₹<%= listing.price.toLocaleString("en-IN") %> <span class="per-night">per night</span></p>
+                    <a href="/listings/<%= listing._id %>" class="btn btn-outline-primary btn-sm">View Details</a>
+                </div>
+            </div>
+        </div>
+        <% } %>
+    </div>
+
+    <!-- Empty State -->
+    <% if (allListings.length === 0) { %>
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="empty-state">
+                <i class="fas fa-home fa-3x text-muted mb-3"></i>
+                <h3>No listings yet</h3>
+                <p class="text-muted">Be the first to add a beautiful place!</p>
+                <a href="/listings/new" class="btn btn-primary">Add Your First Listing</a>
+            </div>
+        </div>
+    </div>
+    <% } %>
+</div>

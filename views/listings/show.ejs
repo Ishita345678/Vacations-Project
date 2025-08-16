@@ -1,0 +1,138 @@
+<% layout("/layouts/boilerplate") %>
+<div class="container mt-4">
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Image -->
+            <div class="listing-hero-image">
+                <img src="<%= listing.image %>" alt="<%= listing.title %>" class="listing-image">
+            </div>
+
+            <!-- Title and Location -->
+            <h1 class="listing-main-title"><%= listing.title %></h1>
+            <p class="listing-location-text">
+                <i class="fas fa-map-marker-alt"></i>
+                <%= listing.location %>, <%= listing.country %>
+            </p>
+
+            <!-- Description -->
+            <div class="listing-description">
+                <h3>About this place</h3>
+                <% if(listing.owner) { %>
+                    Owned by: <i><%= listing.owner.username %></i>
+                <% } %>
+                <p><%= listing.description %></p>
+            </div>
+
+            <!-- Amenities -->
+            <div class="listing-amenities">
+                <h3>What this place offers</h3>
+                <div class="amenities-list">
+                    <div class="amenity-item">
+                        <i class="fas fa-wifi"></i> WiFi
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fas fa-parking"></i> Free parking
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fas fa-snowflake"></i> Air conditioning
+                    </div>
+                    <div class="amenity-item">
+                        <i class="fas fa-utensils"></i> Kitchen
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leave a Review -->
+            <div class="review-section">
+                <%if (currentUser){%>
+                <form method="POST" action="/listings/<%= listing._id %>/reviews">
+                    <!--html code from starability for review styling-->
+                    <fieldset class="starability-slot">
+                        <legend>Leave a review</legend>
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label for="comment">Comments</label>
+                        <textarea name="review[comment]" id="comment" class="form-control" rows="3" required>Very good!</textarea>
+                        <div class="invalid-feedback">Please enter a comment</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+                <br>
+                <hr>
+                <%}%>
+                <div class="row">
+        <% for(review of listing.reviews) { %>
+            <div class="card col-5 ms-3 mb-3">
+                <h3><%= review.author ? review.author.username : 'Unknown User' %></h3>
+                <div class="card-body">
+                      <p class="starability-result" data-rating=<%=review.rating%>></p>
+  
+
+                    <p class="card-text"><%= review.comment %></p>
+                </div>
+                <% if (currentUser && review.author && currentUser._id.equals(review.author._id)) { %>
+                <form class="mb-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                    <button class="btn btn-sm btn-dark">Delete</button>
+                </form>
+                <% } %>
+            </div>
+        <%}%>
+    </div>
+            </div>
+        </div>
+
+        <!-- Price Sidebar -->
+        <div class="col-lg-4">
+            <div class="price-card">
+                <h3>Price</h3>
+                <div class="price-display">
+                    <span class="price-amount">₹<%= listing.price.toLocaleString("en-IN") %></span>
+                    <span class="price-per-night">per night</span>
+                </div>
+                
+                <!-- Booking Form -->
+                <div class="booking-form">
+                    <div class="form-group">
+                        <label>Check-in</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Check-out</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <button class="btn btn-primary btn-block">Reserve</button>
+                </div>
+            </div>
+        </div>
+
+    <!-- Action Buttons -->
+   
+<% if (currentUser && listing.owner && currentUser._id.equals(listing.owner._id)){%>
+    <div class="action-buttons-container">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-outline-primary">
+            <i class="fas fa-edit">Edit</i>
+        </a>
+        <form method="POST" action="/listings/<%= listing._id %>" style="display: inline;">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-outline-danger">
+                <i class="fas fa-trash">Delete</i> 
+            </button>
+        </form>
+    </div>
+<% } %>
+
+</div>
+</div>
