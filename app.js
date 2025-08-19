@@ -24,7 +24,7 @@ const { isLoggedIn, validateListing, validateReview } = require("./middleware.js
 app.use(express.static(path.join(__dirname, "public")));
 
 //const MONGO_URL = "mongodb://127.0.0.1:27017/vacation";
-const dbURL = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/vacation";
+const dbURL = process.env.ATLASDB_URL;
 
 const store = MongoStore.create({
   mongoUrl: dbURL,
@@ -281,9 +281,7 @@ app.use((err,req,res,next)=>{
 //   console.log("sample was saved");
 //   res.send("successful testing");
 // });
-
-const server = app.listen(0, () => {
-  const port = server.address().port;
-  console.log(`server is listening to port ${port} - NODEMON TEST`);
-  console.log(`Visit http://localhost:${port}/listings to see your application`);
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`server is listening to port ${PORT}`);
 });
