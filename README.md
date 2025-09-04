@@ -8,3 +8,4 @@
 ![image alt](https://github.com/Ishita345678/Vacations-Project/blob/d87651c99d7b7a3dc9aa7e5bd6f8727d14884b5b/Screenshot%20(239).png)
 ![image_alt](https://github.com/Ishita345678/Vacations-Project/blob/f6b5fb71e6acb1ad922e5a9a6b0af0647ea77797/Screenshot%20(240).png)
 ![image_alt](https://github.com/Ishita345678/Vacations-Project/blob/770f8583d927186712e105d66be696bc0beadc1a/Screenshot%20(241).png)
+![image_alt](https://github.com/Ishita345678/Vacations-Project/blob/01fbeee3a01713df833f91a5a65da9515e850fd3/Screenshot%20(242).png)
